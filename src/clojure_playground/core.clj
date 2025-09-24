@@ -52,7 +52,12 @@
 
 ;; map function
 ;; inc in increment
+;; Do the calculatiton in synchronous
 (map (fn [e1 e2] 
+       (+ e1 e2)
+       ) v v)
+;; Do the calculation in pararel
+(pmap (fn [e1 e2] 
        (+ e1 e2)
        ) v v)
 
@@ -85,3 +90,23 @@
 
 ;; Frequency
 (frequencies v)
+
+;; Static Method
+;; We can access java functionality
+(Integer/parseInt "123")
+(String. "string")
+(def i (Integer. 1))
+
+;; Call instance value of the i
+(.intValue i)
+
+;; Future just create process in another thread
+(do (future 
+      (Thread/sleep 1000)
+      (println "Hi from thread")) 
+    (println "end"))
+
+;; Atoms -> avoid race condition
+(def a (atom 0))
+(do (future (swap! a inc)) (future (swap! a inc)))
+(deref a)
